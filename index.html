@@ -81,7 +81,8 @@
                 </li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="cart.html">Cart</a></li>
+                <li><a href="bulk-order.html" style="color:var(--primary-light); font-weight:700;"><i class="fas fa-boxes"></i> Bulk Order</a></li>
+                <li><a href="cart.html" style="position:relative;"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" style="position:absolute;top:-8px;right:-12px;background:var(--primary-light);color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.7rem;display:none;align-items:center;justify-content:center;font-weight:700;">0</span></a></li>
                 <li><a href="tel:+919885533297" class="nav-phone"><i class="fas fa-phone-alt"></i> Call Us</a></li>
             </ul>
         </div>
@@ -180,59 +181,286 @@
         </div>
     </section>
 
-    <!-- Inventory / Featured Plants Section -->
-    <section class="section" id="inventory">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 50px;">
-                <span class="section-tag">Direct from Farm</span>
-                <h2 class="section-title">Featured <span>Plants</span></h2>
+    <!-- Amazon-Style Shop Section -->
+    <section id="inventory" style="background:#f3f3f3; padding:30px 0;">
+        <div style="max-width:1300px; margin:0 auto; padding:0 20px;">
+
+            <!-- Shop Header -->
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px; margin-bottom:25px;">
+                <div>
+                    <span class="section-tag">Direct from Farm</span>
+                    <h2 class="section-title" style="margin:0;">Our <span>Plant Shop</span></h2>
+                </div>
+
+                <!-- Search Bar -->
+                <div style="display:flex; gap:0; flex:1; max-width:500px; min-width:250px;">
+                    <input id="shopSearch" type="text" placeholder="Search plants..." oninput="filterShop()"
+                        style="flex:1; padding:12px 18px; border:2px solid var(--primary); border-right:none; border-radius:8px 0 0 8px; font-size:1rem; outline:none; font-family:'Inter',sans-serif;">
+                    <button onclick="filterShop()" style="background:var(--primary); color:#fff; border:none; padding:12px 20px; border-radius:0 8px 8px 0; cursor:pointer; font-size:1rem;">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
-            
-            <div class="plant-grid" id="featured-plants">
-                <!-- Example Plant 1 -->
-                <div class="plant-card">
-                    <div class="plant-img">
-                        <img src="premium-zz.jpg" alt="ZZ Plant">
-                        <span class="plant-badge">Indoor</span>
-                    </div>
-                    <div class="plant-info">
-                        <h3>Premium ZZ Plant</h3>
-                        <p>Air-purifying and incredibly resilient. Perfect for modern homes and offices.</p>
-                        <h4 class="plant-price" style="color: var(--primary); margin: 10px 0; font-size: 1.1rem;">Cost: ₹199.00</h4>
-                        <a href="https://wa.me/919885533297" class="btn btn-outline" style="color: var(--primary); border-color: var(--primary); text-align: center;"><i class="fab fa-whatsapp"></i> Buy on WhatsApp</a>
-                    </div>
-                </div>
 
-                <!-- Example Plant 2 -->
-                <div class="plant-card">
-                    <div class="plant-img">
-                        <img src="neem-tree.jpg" alt="Neem Tree">
-                        <span class="plant-badge">Avenue</span>
-                    </div>
-                    <div class="plant-info">
-                        <h3>Mature Neem Tree</h3>
-                        <p>High-quality avenue tree sapling. Excellent shade and medicinal properties.</p>
-                        <h4 class="plant-price" style="color: var(--primary); margin: 10px 0; font-size: 1.1rem;">Cost: ₹249.00</h4>
-                        <a href="https://wa.me/919885533297" class="btn btn-outline" style="color: var(--primary); border-color: var(--primary); text-align: center;"><i class="fab fa-whatsapp"></i> Buy on WhatsApp</a>
-                    </div>
-                </div>
+            <!-- Filters + Sort -->
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:25px; align-items:center;">
+                <span style="font-weight:600; color:var(--text-dark);">Filter:</span>
+                <button class="shop-filter active" onclick="setFilter('all',this)">All</button>
+                <button class="shop-filter" onclick="setFilter('indoor',this)">🪴 Indoor</button>
+                <button class="shop-filter" onclick="setFilter('outdoor',this)">🌳 Outdoor</button>
+                <button class="shop-filter" onclick="setFilter('avenue',this)">🌲 Avenue Trees</button>
+                <button class="shop-filter" onclick="setFilter('fruit',this)">🍋 Fruit Plants</button>
+                <button class="shop-filter" onclick="setFilter('ornamental',this)">🌸 Ornamental</button>
+                <button class="shop-filter" onclick="setFilter('flowering',this)">🌺 Flowering</button>
 
-                <!-- Example Plant 3 -->
-                <div class="plant-card">
-                    <div class="plant-img">
-                        <img src="banana-mango.jpg" alt="Mango Tree">
-                        <span class="plant-badge">Fruit</span>
-                    </div>
-                    <div class="plant-info">
-                        <h3>Grafted Mango Plant</h3>
-                        <p>High-yielding commercial variety. Healthy graft ready for plantation.</p>
-                        <h4 class="plant-price" style="color: var(--primary); margin: 10px 0; font-size: 1.1rem;">Cost: ₹199.00</h4>
-                        <a href="https://wa.me/919885533297" class="btn btn-outline" style="color: var(--primary); border-color: var(--primary); text-align: center;"><i class="fab fa-whatsapp"></i> Buy on WhatsApp</a>
-                    </div>
+                <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+                    <span style="font-weight:600; color:var(--text-dark);">Sort:</span>
+                    <select id="shopSort" onchange="filterShop()" style="padding:8px 12px; border:1px solid #ccc; border-radius:6px; font-family:'Inter',sans-serif; cursor:pointer;">
+                        <option value="default">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
                 </div>
+            </div>
+
+            <!-- Results count -->
+            <p id="shopCount" style="color:var(--text-muted); margin-bottom:20px; font-size:0.95rem;"></p>
+
+            <!-- Product Grid -->
+            <div id="shopGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px;"></div>
+
+            <!-- No Results -->
+            <div id="shopNoResults" style="display:none; text-align:center; padding:60px 20px;">
+                <i class="fas fa-search" style="font-size:3rem; color:#ccc; margin-bottom:15px; display:block;"></i>
+                <h3 style="color:var(--text-muted);">No plants found</h3>
+                <p style="color:#aaa;">Try a different search or category</p>
             </div>
         </div>
     </section>
+
+    <style>
+    .shop-filter {
+        padding: 8px 18px;
+        border: 2px solid #ddd;
+        border-radius: 50px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        color: var(--text-dark);
+    }
+    .shop-filter.active, .shop-filter:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+    }
+    .prod-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        transition: box-shadow 0.3s, transform 0.3s;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    .prod-card:hover {
+        box-shadow: 0 8px 25px rgba(11,93,59,0.18);
+        transform: translateY(-4px);
+    }
+    .prod-badge-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--primary);
+        color: #fff;
+        padding: 3px 10px;
+        border-radius: 50px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .prod-badge-sale {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #e53935;
+        color: #fff;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+    .prod-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+    }
+    .prod-body {
+        padding: 14px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .prod-name {
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+        line-height: 1.3;
+    }
+    .prod-stars { color: #f5a623; font-size: 0.8rem; margin-bottom: 6px; }
+    .prod-stars span { color: var(--text-muted); font-size: 0.8rem; margin-left: 4px; }
+    .prod-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+    .prod-price { font-size: 1.25rem; font-weight: 800; color: #222; font-family:'Outfit',sans-serif; }
+    .prod-mrp { font-size: 0.82rem; color: #999; text-decoration: line-through; }
+    .prod-discount { font-size: 0.82rem; color: #e53935; font-weight: 700; }
+    .prod-stock { font-size: 0.8rem; color: #2e7d32; font-weight: 600; margin-bottom: 10px; }
+    .prod-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; flex: 1; }
+    .btn-add-cart {
+        width: 100%;
+        padding: 9px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 0.88rem;
+        margin-bottom: 6px;
+        transition: background 0.2s;
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-add-cart:hover { background: var(--primary-light); }
+    .btn-wa {
+        width: 100%;
+        padding: 9px;
+        background: #25D366;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 0.88rem;
+        transition: background 0.2s;
+        text-align: center;
+        display: block;
+        text-decoration: none;
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-wa:hover { background: #1eb956; }
+    </style>
+
+    <script>
+    const PLANTS = [
+        { id:'zz-plant', name:'Premium ZZ Plant', img:'premium-zz.jpg', cat:'indoor', price:199, mrp:299, rating:4.8, reviews:124, desc:'Air-purifying & incredibly resilient. Perfect for modern homes and offices.', sale:true },
+        { id:'snake-plant', name:'Snake Plant (Sansevieria)', img:'snake-plant.jpg', cat:'indoor', price:149, mrp:250, rating:4.9, reviews:210, desc:'Low maintenance air purifier. Thrives in low light and dry conditions.', sale:true },
+        { id:'peace-lily', name:'Peace Lily', img:'peace-lily.jpg', cat:'indoor', price:179, mrp:280, rating:4.7, reviews:98, desc:'Elegant white flowers. Excellent air purifier for bedrooms and offices.' },
+        { id:'spider-plant', name:'Spider Plant', img:'spider-plant.jpg', cat:'indoor', price:99, mrp:180, rating:4.6, reviews:155, desc:'Fast-growing, pet-friendly indoor plant. Great for hanging baskets.' },
+        { id:'rubber-plant', name:'Rubber Plant (Ficus)', img:'rubber-plant.jpg', cat:'indoor', price:249, mrp:399, rating:4.8, reviews:87, desc:'Statement indoor tree with glossy dark leaves. Very low maintenance.' },
+        { id:'ficus-lyrata', name:'Fiddle Leaf Fig', img:'ficus-lyrata.jpg', cat:'indoor', price:399, mrp:599, rating:4.5, reviews:63, desc:'Trending statement plant with large violin-shaped leaves.' },
+        { id:'neem-tree', name:'Mature Neem Tree', img:'neem-tree.jpg', cat:'avenue', price:249, mrp:350, rating:4.9, reviews:312, desc:'High-quality avenue tree. Excellent shade and medicinal properties.', sale:true },
+        { id:'areca-palm', name:'Areca Palm', img:'areca-palm.jpg', cat:'outdoor', price:299, mrp:450, rating:4.8, reviews:189, desc:'Elegant tropical palm. Perfect for garden borders and entrances.' },
+        { id:'tall-fan-palm', name:'Tall Fan Palm', img:'tall-fan-palm.jpg', cat:'avenue', price:599, mrp:899, rating:4.7, reviews:77, desc:'Majestic tall palm ideal for large landscapes and commercial areas.' },
+        { id:'mango-plant', name:'Grafted Mango Plant', img:'banana-mango.jpg', cat:'fruit', price:199, mrp:350, rating:4.9, reviews:428, desc:'High-yielding commercial variety. Healthy graft ready for plantation.', sale:true },
+        { id:'lemon-tree', name:'Lemon Tree (Grafted)', img:'lemon-tree.jpg', cat:'fruit', price:179, mrp:280, rating:4.8, reviews:203, desc:'Heavy yielding lemon variety. Fruits within 1 year of planting.' },
+        { id:'custard-apple', name:'Custard Apple Plant', img:'custard-apple.jpg', cat:'fruit', price:149, mrp:250, rating:4.6, reviews:91, desc:'Sweet tropical fruit plant. Grafted variety for early fruiting.' },
+        { id:'guava-plant', name:'Grafted Guava Plant', img:'guava-plant.jpg', cat:'fruit', price:129, mrp:220, rating:4.7, reviews:176, desc:'High-yielding guava. Bears fruit within first year of planting.' },
+        { id:'bougainvillea', name:'Bougainvillea', img:'bougainvillea.jpg', cat:'flowering', price:149, mrp:250, rating:4.8, reviews:267, desc:'Vibrant flowering climber available in multiple colors. Low maintenance.' },
+        { id:'plumeria', name:'Plumeria (Frangipani)', img:'plumeria-plant.jpg', cat:'flowering', price:199, mrp:320, rating:4.9, reviews:143, desc:'Fragrant tropical flowers. Perfect for garden centerpieces.' },
+        { id:'pink-canna', name:'Pink Canna Lily', img:'pink-canna-lily.jpg', cat:'flowering', price:99, mrp:180, rating:4.7, reviews:88, desc:'Tropical flowering plant with bold blooms. Perfect for garden borders.' },
+        { id:'round-topiary', name:'Round Topiary Plant', img:'round-topiary.jpg', cat:'ornamental', price:349, mrp:550, rating:4.8, reviews:54, desc:'Professionally shaped ornamental topiary. Ready-to-display garden art.', sale:true },
+        { id:'cycas-palm', name:'Cycas Palm (Sago Palm)', img:'cycas-palm.jpg', cat:'ornamental', price:499, mrp:750, rating:4.9, reviews:112, desc:'Ancient and elegant sago palm. Low maintenance ornamental show-stopper.' },
+        { id:'dragon-tree', name:'Dragon Tree (Dracaena)', img:'dragon-tree.jpg', cat:'ornamental', price:299, mrp:450, rating:4.7, reviews:79, desc:'Striking architectural plant. Excellent indoor-outdoor ornamental.' },
+        { id:'bonsai-topiary', name:'Bonsai Topiary Tree', img:'bonsai-topiary.jpg', cat:'ornamental', price:699, mrp:999, rating:5.0, reviews:38, desc:'Artistically shaped bonsai. Unique gift & statement piece for any space.', sale:true },
+        { id:'cocoa', name:'Cocoa Plant', img:'cocoa.jpg', cat:'fruit', price:229, mrp:380, rating:4.6, reviews:45, desc:'Tropical cocoa plant. Novelty fruit plant with rich chocolate pods.' },
+        { id:'alocasia', name:'Alocasia (Elephant Ear)', img:'alocasia.jpg', cat:'indoor', price:259, mrp:399, rating:4.7, reviews:92, desc:'Dramatic large-leaf tropical. Makes a bold statement indoors or out.' },
+    ];
+
+    let activeFilter = 'all';
+
+    function renderStars(rating) {
+        let s = '';
+        for(let i=1; i<=5; i++){
+            if(rating >= i) s += '<i class="fas fa-star"></i>';
+            else if(rating >= i-0.5) s += '<i class="fas fa-star-half-alt"></i>';
+            else s += '<i class="far fa-star"></i>';
+        }
+        return s;
+    }
+
+    function setFilter(cat, btn) {
+        activeFilter = cat;
+        document.querySelectorAll('.shop-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterShop();
+    }
+
+    function filterShop() {
+        const q = document.getElementById('shopSearch').value.toLowerCase();
+        const sort = document.getElementById('shopSort').value;
+        let filtered = PLANTS.filter(p => {
+            const matchCat = activeFilter === 'all' || p.cat === activeFilter;
+            const matchQ = p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.cat.includes(q);
+            return matchCat && matchQ;
+        });
+        if(sort === 'price-low') filtered.sort((a,b) => a.price - b.price);
+        else if(sort === 'price-high') filtered.sort((a,b) => b.price - a.price);
+        else if(sort === 'rating') filtered.sort((a,b) => b.rating - a.rating);
+
+        const grid = document.getElementById('shopGrid');
+        const noRes = document.getElementById('shopNoResults');
+        const count = document.getElementById('shopCount');
+
+        count.textContent = `Showing ${filtered.length} product${filtered.length !== 1 ? 's' : ''}`;
+
+        if(filtered.length === 0) {
+            grid.innerHTML = '';
+            noRes.style.display = 'block';
+            return;
+        }
+        noRes.style.display = 'none';
+        const discount = p => Math.round((1 - p.price/p.mrp)*100);
+        grid.innerHTML = filtered.map(p => `
+            <div class="prod-card">
+                <span class="prod-badge-tag">${p.cat.charAt(0).toUpperCase()+p.cat.slice(1)}</span>
+                ${p.sale ? '<span class="prod-badge-sale">SALE</span>' : ''}
+                <img class="prod-img" src="${p.img}" alt="${p.name}" loading="lazy">
+                <div class="prod-body">
+                    <div class="prod-name">${p.name}</div>
+                    <div class="prod-stars">${renderStars(p.rating)}<span>(${p.reviews})</span></div>
+                    <div class="prod-price-row">
+                        <span class="prod-price">₹${p.price}</span>
+                        <span class="prod-mrp">₹${p.mrp}</span>
+                        <span class="prod-discount">${discount(p)}% off</span>
+                    </div>
+                    <div class="prod-stock"><i class="fas fa-check-circle"></i> In Stock</div>
+                    <div class="prod-desc">${p.desc}</div>
+                    <div style="display:flex; gap:8px; margin-bottom:10px;">
+                        <button class="btn-add-cart" style="flex:1; padding:10px; font-size:0.85rem;" onclick="Cart.addToCart({id:'${p.id}',name:'${p.name}',price:${p.price},img:'${p.img}'})">
+                            <i class="fas fa-cart-plus"></i> Cart
+                        </button>
+                        <button class="btn-add-cart" style="flex:1; padding:10px; font-size:0.85rem; background:var(--primary); color:white; border:none;" onclick="Cart.addToCart({id:'${p.id}',name:'${p.name}',price:${p.price},img:'${p.img}'}); window.location.href='checkout.html';">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
+                    <a class="btn-wa" href="https://wa.me/919885533297?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}%20(%E2%82%B9${p.price})" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', filterShop);
+    </script>
+
+
 
     <!-- Services / Landscaping -->
     <section class="section landscaping" id="services">
@@ -327,6 +555,79 @@
         </div>
     </section>
 
+    <!-- Quick Bulk Order Form -->
+    <section class="section" id="quick-bulk" style="background: linear-gradient(135deg, #f0faf4 0%, #e8f5e9 100%);">
+        <div class="container" style="max-width: 800px;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <span class="section-tag" style="background: white;">Wholesale Inquiry</span>
+                <h2 class="section-title">Quick <span>Bulk Order</span> Request</h2>
+                <p style="color: var(--text-muted);">Looking for 50+ plants? Send a quick request and our team will get back to you with wholesale pricing.</p>
+            </div>
+            
+            <div style="background: white; padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                <form id="quickBulkForm" onsubmit="event.preventDefault(); submitQuickBulk();">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem;">Your Name *</label>
+                            <input type="text" id="qbName" required style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem;">Phone Number *</label>
+                            <input type="tel" id="qbPhone" required style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif;">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem;">What plants do you need? *</label>
+                        <textarea id="qbPlants" required placeholder="e.g., 200 Neem Trees, 50 Areca Palms..." style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; min-height: 100px; font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <button type="submit" class="btn" style="flex: 1; padding: 15px; font-size: 1rem; border-radius: 8px;">
+                            <i class="fas fa-paper-plane"></i> Request Quote
+                        </button>
+                        <button type="button" onclick="submitQuickBulkWA()" class="btn" style="flex: 1; padding: 15px; font-size: 1rem; border-radius: 8px; background: #25D366; color: white;">
+                            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        function submitQuickBulk() {
+            const name = document.getElementById('qbName').value;
+            const phone = document.getElementById('qbPhone').value;
+            const plants = document.getElementById('qbPlants').value;
+            
+            if(!name || !phone || !plants) return;
+            
+            document.getElementById('quickBulkForm').innerHTML = `
+                <div style="text-align: center; padding: 30px 10px;">
+                    <i class="fas fa-check-circle" style="font-size: 4rem; color: #4caf50; margin-bottom: 20px;"></i>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-bottom: 10px;">Request Received!</h3>
+                    <p style="color: #666; line-height: 1.6;">Thank you, ${name}. Our wholesale team will call you at ${phone} shortly to discuss pricing for your order.</p>
+                </div>
+            `;
+        }
+        
+        function submitQuickBulkWA() {
+            const name = document.getElementById('qbName').value;
+            const phone = document.getElementById('qbPhone').value;
+            const plants = document.getElementById('qbPlants').value;
+            
+            if(!name || !phone || !plants) {
+                alert("Please fill in all fields before sending.");
+                return;
+            }
+            
+            const msg = `Hello Our's Kadiyam Nursery! 🌿\n\n*QUICK BULK INQUIRY*\n*Name:* ${name}\n*Phone:* ${phone}\n\n*Plants Needed:*\n${plants}\n\nPlease let me know the wholesale pricing for these.`;
+            window.open('https://wa.me/919885533297?text=' + encodeURIComponent(msg), '_blank');
+        }
+    </script>
+
     <!-- Locations Section -->
     <section class="section" id="locations" style="background: var(--bg-earthy);">
         <div class="container">
@@ -389,6 +690,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Bulk Order CTA -->
+            <div style="margin-top: 50px; background: linear-gradient(135deg, var(--primary) 0%, #1a7a50 100%); border-radius: var(--radius-lg); padding: 40px; text-align: center; color: white; box-shadow: var(--shadow-md);">
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 2rem; margin-bottom: 15px;">Looking for Wholesale Quantities?</h3>
+                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto;">We supply premium plants in bulk for landscapers, builders, resorts, and government projects. Get up to 40% discount!</p>
+                <a href="bulk-order.html" class="btn" style="background: white; color: var(--primary); font-weight: 700; padding: 15px 30px; font-size: 1.1rem; border-radius: 50px; display: inline-flex; align-items: center; gap: 10px; transition: transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <i class="fas fa-truck"></i> Place Bulk Order
+                </a>
             </div>
         </div>
     </section>
